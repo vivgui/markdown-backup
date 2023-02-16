@@ -50,9 +50,12 @@ Promise.all(
           // ignore local images
           return match;
         }
-        const destImagePath = `${imagesDir}/${Buffer.from(url).toString(
-          "base64"
-        )}`;
+
+
+        const fileNameArr = url.split("/");
+        const fileName = fileNameArr[fileNameArr.length - 1].split("?")[0];
+        const destImagePath = `${imagesDir}/${fileName}`;
+        // console.log(destImagePath)
         if (await checkFileExists(destImagePath)) {
           console.log(`Skipping: ${url} (already exists)`);
           return match.replace(url, `./${path.relative(fileDir, destImagePath)}`);
